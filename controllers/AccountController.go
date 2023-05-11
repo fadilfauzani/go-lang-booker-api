@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"sporesappapi/dtos"
+	"sporesappapi/helper"
 	"sporesappapi/models"
 	"sporesappapi/repository"
-	"sporesappapi/helper"
 	"sporesappapi/services"
 
 	"github.com/gin-gonic/gin"
@@ -37,9 +37,7 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-
 	helper.MapRegisterToUser(registerDto, &user)
-	
 
 	if err != nil {
 		fmt.Println(err)
@@ -90,7 +88,4 @@ func LoginUser(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, dtos.AuthDto{Token: token})
-}
-func Test(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "berhasil"})
 }
