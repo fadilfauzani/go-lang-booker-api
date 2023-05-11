@@ -36,8 +36,11 @@ func main() {
 	gorGroup.POST("", controllers.CreateGor)
 
 	bookingGroup := authGroup.Group("/booking")
-	bookingGroup.POST("", controllers.CreateBookingRequest)
-	bookingGroup.GET("/history", controllers.GetUserBookingHistroy)
+	bookingGroup.POST("/:gor", controllers.CreateBookingRequest)
+	bookingGroup.GET("/history", controllers.GetUserBookingHistory)
+
+	paymentGroup := authGroup.Group("/pay")
+	paymentGroup.PATCH("/:booking", controllers.PayBooking)
 	r.Run(":8080")
 
 }

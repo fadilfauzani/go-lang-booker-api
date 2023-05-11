@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetGor(c *gin.Context){
+func GetGor(c *gin.Context) {
 	query, _ := c.GetQuery("query")
 	category, _ := c.GetQuery("category")
 
@@ -19,24 +19,24 @@ func GetGor(c *gin.Context){
 	result, err := repository.SearchGor(query, category)
 
 	if err != nil {
-		c.AbortWithError(http .StatusInternalServerError, err)
+		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 	var gors []dtos.GorDto
-	for _, val := range result{
+	for _, val := range result {
 		var valDto dtos.GorDto
 		helper.MapGorToDto(*val, &valDto)
 		gors = append(gors, valDto)
 	}
-	c.JSON(http.StatusOK, gin.H {
-		"data" : gors,
+	c.JSON(http.StatusOK, gin.H{
+		"data": gors,
 	})
 }
 
-func CreateGor(c *gin.Context){
+func CreateGor(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
-	var( 
-		gor models.Gor
+	var (
+		gor    models.Gor
 		gorDto dtos.GorDto
 	)
 	err := c.ShouldBind(&gorDto)
@@ -46,9 +46,9 @@ func CreateGor(c *gin.Context){
 		return
 	}
 
-	helper.MapDtotoGor(gorDto, &gor)
+	helper.MapDtoToGor(gorDto, &gor)
 
-	result, err  := repository.CreateGor(gor)
+	result, err := repository.CreateGor(gor)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
@@ -58,17 +58,7 @@ func CreateGor(c *gin.Context){
 	helper.MapGorToDto(*result, &gorDto)
 
 	c.JSON(http.StatusOK, gin.H{
-		"data" : gorDto,
+		"data": gorDto,
 	})
-
-
-
-}
-
-func GetAllGorFromCategory(c *gin.Context){
-
-}
-
-func GetGorQuery(c *gin.Context){
 
 }

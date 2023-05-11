@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/mail"
 	"strings"
+	"time"
 )
 
 func ExtractBearerToken(Authheader string) (string, error) {
@@ -23,4 +24,8 @@ func ValidateEmailPassword(email string, password string) bool {
 	_, err := mail.ParseAddress(email)
 
 	return len(password) > 5 && err == nil
+}
+
+func ValidateBookingTime(start time.Time, end time.Time) bool {
+	return start.Before(end) && start.After(time.Now())
 }
