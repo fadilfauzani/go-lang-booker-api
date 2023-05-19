@@ -79,7 +79,12 @@ func ChangePassword(c *gin.Context){
 		return
 	}
 
-	user.Password = passwordDto.Password
+	if (!helper.CheckPasswordHash(passwordDto.OldPassword, user.Password)){
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"errors": "Password Doesnt Match"})
+		return
+	}
+
+	user.Password = passwordDto.NewPassword
 
 	_, err = repository.ChangePasswordUser(*user)
 	if err != nil {

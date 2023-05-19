@@ -1,5 +1,6 @@
 package dtos
 
 type PasswordDto struct {
-	Password string `json:"password"`
+	OldPassword string `json:"oldPassword"`
+	NewPassword string `json:"newPassword"`
 }
