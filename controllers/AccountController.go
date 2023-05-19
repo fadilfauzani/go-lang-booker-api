@@ -8,6 +8,7 @@ import (
 	"sporesappapi/models"
 	"sporesappapi/repository"
 	"sporesappapi/services"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +22,7 @@ func CreateUser(c *gin.Context) {
 	)
 	var registerDto = dtos.RegisterDto{}
 	err := c.ShouldBind(&registerDto)
-
+	registerDto.Email = strings.ToLower( registerDto.Email)
 	if err != nil {
 		fmt.Println(err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
@@ -65,7 +66,7 @@ func LoginUser(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	var loginDto = dtos.LoginDto{}
 	err := c.ShouldBind(&loginDto)
-
+	loginDto.Email = strings.ToLower( loginDto.Email)
 	if err != nil {
 		fmt.Println(err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
